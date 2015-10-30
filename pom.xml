@@ -6,20 +6,55 @@
   <packaging>jar</packaging>
   <version>1.0-SNAPSHOT</version>
   <name>utis-client</name>
-  <url>http://maven.apache.org</url>
+  
+  <properties>
+    <swagger-codegen-cli.version>2.1.4</swagger-codegen-cli.version>
+  </properties>
+  
+  <repositories>
+  </repositories>
+    
   <dependencies>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>3.8.1</version>
-      <scope>test</scope>
-    </dependency>
   </dependencies>
 
   <build>
     <pluginManagement>
       <plugins>
         <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-dependency-plugin</artifactId>
+          <version>2.10</version>
+          <configuration>
+            <artifactItems>
+              <artifactItem>
+                <groupId>io.swagger</groupId>
+                <artifactId>swagger-codegen-cli</artifactId>
+                <version>${swagger-codegen-cli.version}</version>
+                <type>jar</type>
+                <!-- <classifier> [classifier - optional] </classifier> -->
+                <overWrite>true</overWrite>
+                <destFileName>swagger-codegen-cli.jar</destFileName>
+                <outputDirectory>${project.build.directory}/lib/</outputDirectory>
+              </artifactItem>
+            </artifactItems>
+            <silent>flase</silent>
+            <stripVersion>true</stripVersion>
+            <overWriteSnapshots>true</overWriteSnapshots>
+            <overWriteIfNewer>true</overWriteIfNewer>
+            <overWriteReleases>true</overWriteReleases>
+          </configuration>
+          <executions>
+            <execution>
+              <id>copy</id>
+              <phase>validate</phase>
+              <goals>
+                <goal>copy</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
+        <!-- 
+          <plugin>
           <groupId>io.swagger</groupId>
           <artifactId>swagger-codegen-maven-plugin</artifactId>
           <version>2.1.4</version>
@@ -37,6 +72,37 @@
               </goals>
             </execution>
           </executions>
+        </plugin>
+         -->
+        <plugin>
+            <!-- Run with:
+                mvn bash:run
+                mvn install
+            -->
+            <groupId>com.atlassian.maven.plugins</groupId>
+            <artifactId>bash-maven-plugin</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <executions>
+                <execution>
+                    <id>test</id>
+                    <phase>package</phase>
+                    <goals>
+                        <goal>run</goal>
+                    </goals>
+                </execution>
+            </executions>
+            <configuration>
+                <script>
+                    # Here you can execute shell commands
+                    echo "starting client creation"
+                    ./download_utis_controller_def.sh
+                    echo "generating client sources"
+                    java -jar ./target/swagger-codegen.jar generate \
+                    -i src/main/resources/utis-controller.json -l java \
+                    -o ./target/client/src/java/
+                    
+                </script>
+            </configuration>
         </plugin>
       </plugins>
     </pluginManagement>
