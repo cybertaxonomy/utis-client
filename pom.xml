@@ -9,12 +9,27 @@
   
   <properties>
     <swagger-codegen-cli.version>2.1.4</swagger-codegen-cli.version>
+    <utis-client.version>1.0</utis-client.version>
   </properties>
   
   <repositories>
+    <repository>
+      <id>EditRepository</id>
+      <url>http://dev.e-taxonomy.eu/mavenrepo/</url>
+    </repository>
   </repositories>
     
   <dependencies>
+    <dependency>
+        <groupId>org.cybertaxonomy</groupId>
+        <artifactId>utis-client</artifactId>
+        <version>${utis-client.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.11</version>
+    </dependency>
   </dependencies>
 
   <build>
