@@ -1,6 +1,6 @@
 {
   "groupId":"org.cybertaxonomy",
   "artifactId":"utis-client",
-  "artifactVersion":"1.0",
+  "artifactVersion":"1.2.0",
   "invokerPackage":"org.cybertaxonomy.utis.client" 
 }
