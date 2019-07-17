@@ -1,5 +1,7 @@
 The templates are copied from https://github.com/swagger-api/swagger-codegen
 
+The template files are found https://github.com/swagger-api/swagger-codegen/tree/master/modules/swagger-codegen/src/main/resources
+
 ## Templates in this project
 
 ### Java:
